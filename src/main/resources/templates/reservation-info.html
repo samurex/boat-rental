@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="links">
+    <link th:href="@{~/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css}" rel="stylesheet"/>
+</th:block>
+<body>
+<th:block layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <h3>Total price <span th:text="${checkoutForm.totalPrice}" /></span</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-9" th:text="${infoForm.boatTypeName}"></dt>
+            <dd class="col-sm-3" th:text="${infoForm.boatPrice}"></dd>
+
+            <th:block th:each="reservationEquipment : ${checkoutForm.equipment}">
+                <dt class="col-sm-9" th:text="${reservationEquipment.name}"></dt>
+                <dd class="col-sm-3" th:text="${reservationEquipment.price}"></dd>
+            </th:block>
+        </dl>
+    </div>
+
+</th:block>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" th:href="@{~/bower_components/bootstrap/dist/css/bootstrap.css}">
+
+        <!-- Glymphicons -->
+        <link rel="stylesheet" th:href="@{~/bower_components/glyphicons/styles/glyphicons.css}">
+
+        <!-- additional links -->
+        <th:block layout:fragment="links">
+        </th:block>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse" style="margin-bottom:0">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                        TeslaBoat
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <th:block layout:fragment="content">
+            <p>Content goes here...</p>
+        </th:block>
+
+        <script th:src="@{~/bower_components/jquery/dist/jquery.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+        <script th:src="@{~/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+
+        <!-- additional scripts -->
+        <th:block layout:fragment="scripts">
+        </th:block>
+    </body>
+</html>
+

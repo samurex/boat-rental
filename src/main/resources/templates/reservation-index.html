@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <th:block layout:fragment="links">
+        <link th:href="@{~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}" rel="stylesheet"/>
+    </th:block>
+
+    <body>
+            <th:block layout:fragment="content">
+                <div class="jumbotron">
+                    <div class="container">
+                        <form method="POST">
+                            <div class="form-group">
+                                <label>Destination</label>
+                                <select name="destination" class="form-control" style="width:20em" required>
+                                    <option value="">Select destination</option>
+                                    <option th:each="destination : ${boatSearchForm.destinations}"
+                                            th:value="${destination.id}"
+                                            th:text="${destination.name}"
+                                            th:selected="${destination.id.equals(boatSearchForm.selectedDestination)}"/>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input id="date" th:value="${#dates.format(boatSearchForm.selectedDate, 'yyyy-MM-dd')}" name="date" type="text" class="form-control" style="width:20em" placeholder="Open calendar" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Find Boat</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="boat-types" style="padding-top:10px">
+                        <th:block th:each="boatType : ${boatSearchForm.boatTypes}">
+                            <div class="row">
+                                <div class="col-12 col-md-3">
+                                    <img src="http://via.placeholder.com/200x150" alt="Boat">
+                                </div>
+                                <form action="/rent" method="post" class="col-12 col-md-9">
+                                    <input type="hidden" name="locationId" th:value="${boatSearchForm.selectedDestination}"/>
+                                    <input type="hidden" name="reservationDate" th:value="${#dates.format(boatSearchForm.selectedDate, 'yyyy-MM-dd')}"/>
+                                    <input type="hidden" name="boatTypeId" th:value="${boatType.id}"/>
+
+                                    <h5 class="mt-0" th:text="${boatType.name}"></h5>
+                                    <th:block th:each="i : ${#numbers.sequence(1, boatType.seats)}">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </th:block>
+                                    <p th:text="${boatType.description}"></p>
+                                    <p>Price from <strong th:text="${#numbers.formatDecimal(boatType.price, 0, 'DEFAULT', 2, 'DEFAULT')}"></strong></p>
+                                    <button type="submit" class="btn btn-primary" style="width:10em">Rent</button>
+                                    </p>
+                                </form>
+                            </div>
+
+                            <hr/>
+                            <th:block>
+                    </div>
+                </div>
+            </th:block>
+            <th:block layout:fragment="scripts">
+                <script th:src="@{~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+                <script>
+                    $(function () {
+                        $('#date').datepicker({
+                             format: 'yyyy-mm-dd',
+                             startDate: '-0d',
+                        }).on('changeDate', function(ev) {
+                            $(this).datepicker('hide');
+                        });
+                    });
+                </script>
+            </th:block>
+    </body>
+</html>

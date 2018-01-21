@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="links">
+    <link th:href="@{~/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css}" rel="stylesheet"/>
+</th:block>
+<body>
+<th:block layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <h3>Total price <span th:text="${reservation.totalPrice}" /></span</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <dl class="row">
+            <dt class="col-sm-9" th:text="${reservation.boat.boatType.name}"></dt>
+            <dd class="col-sm-3" th:text="${reservation.boatPrice}"></dd>
+
+            <th:block th:each="reservationEquipment : ${reservation.reservationEquipment}">
+                <dt class="col-sm-9" th:text="${reservationEquipment.equipment.equipmentType.name}"></dt>
+                <dd class="col-sm-3" th:text="${reservationEquipment.price}"></dd>
+            </th:block>
+        </dl>
+        <form method="POST" id="checkout-form">
+            <input type="hidden" th:value="${amount}" name='amount' />
+            <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+            <script src='https://checkout.stripe.com/checkout.js'
+                class='stripe-button'
+                th:attr='data-key=${stripePublicKey},
+                data-amount=${amount},
+                data-currency=${currency}'
+                data-name='Teslaboat'
+                data-description='TeslaBoat payment'
+                data-image ='http://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+                data-locale='auto'
+                data-zip-code='false'>
+            </script>
+        </form>
+    </div>
+
+</th:block>
+</body>
+</html>

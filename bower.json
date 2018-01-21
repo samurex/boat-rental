@@ -1,0 +1,23 @@
+{
+  "name": "teslaboat",
+  "authors": [
+    "Maciej Samoraj <maciej.samoraj@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.7.1",
+    "glyphicons": "^0.0.2",
+    "bootstrap-touchspin": "^3.1.2"
+  }
+}

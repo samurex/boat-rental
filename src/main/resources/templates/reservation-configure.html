@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="links">
+    <link th:href="@{~/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css}" rel="stylesheet"/>
+</th:block>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    <h3>Boat Reservation</h3>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <form method="POST" th:object="${configurationForm}">
+                <th:block th:each="equipmentType, stat : ${configurationForm.equipment}">
+                    <div class="form-group" style="width:20em">
+                        <input id="base-price" type="hidden" th:value="${configurationForm.boatPrice}" />
+                        <label th:text="${equipmentType.name}"></label> <strong th:text="${#numbers.formatDecimal(equipmentType.price, 0, 'DEFAULT', 2, 'DEFAULT')}"></strong>
+                        <input type="hidden" th:field="*{equipment[__${stat.index}__].id}" th:value="${equipmentType.id}" />
+                        <input type="number" class="equipment-input" th:field="*{equipment[__${stat.index}__].quantity}" th:value="0"
+                               th:attr="data-max=${equipmentType.availableQuantity},data-price=${#numbers.formatDecimal(equipmentType.price, 0, 'DEFAULT', 2, 'DEFAULT')}"/>
+                    </div>
+                </th:block>
+                <hr/>
+                <p>
+                    Total: <strong id="total-price" th:text="${#numbers.formatDecimal(configurationForm.boatPrice, 0, 'DEFAULT', 2, 'DEFAULT')}"></strong>
+                </p>
+                <button type="submit" class="btn btn-primary">Confirm and pay</button>
+            </form>
+        </div>
+    </th:block>
+    <th:block layout:fragment="scripts">
+        <script th:src="@{~/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js}"></script>
+        <script>
+            function recalculatePrice() {
+                var boatPrice = parseFloat($('#base-price').val());
+                var totalPrice = boatPrice;
+                $('.equipment-input').each(function() {
+                    var price = parseFloat($(this).data('price'));
+                    totalPrice += parseFloat($(this).val()) * price;
+                });
+                return totalPrice;
+            }
+            $(function () {
+                 $('.equipment-input').each(function() {
+                    var max = $(this).data('max') || 0;
+                    $(this).TouchSpin({
+                        min: 0,
+                        max: max
+                    })
+                    .change(function (e) {
+                        var totalPrice = recalculatePrice();
+                        $('#total-price').text(totalPrice.toFixed(2));
+                    });
+                 });
+            });
+        </script>
+    </th:block>
+</body>
+</html>

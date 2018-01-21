@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="links">
+    <link th:href="@{~/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css}" rel="stylesheet"/>
+</th:block>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="alert alert-success" role="alert">
+                <strong>Well done!</strong> Reservation process is completed
+            </div>
+        </th:block>
+    </body>
+</html>
